@@ -14,6 +14,10 @@
 		{{ post.published_date }}
 	</time>
 	{% endif %}
+	{% if post.image %}
+	<img src="{{ post.image.url }}" alt="Blog Image">
+	{% endif %}
+
 	<h2>{{ post.title }}</h2>
 	<p>{{ post.text|linebreaksbr }}</p>
 </article>
