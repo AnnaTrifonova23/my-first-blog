@@ -18,6 +18,7 @@ db.sqlite3
 # Static folder at projec
 # Static folder at project root
 /static/
+/media/
 # Windows
 Thumbs.db*
 ehthumbs*.db
@@ -27,3 +28,5 @@ $RECYCLE.BIN/
 .vscode/
 .history/
 *.code-workspace
+
+
