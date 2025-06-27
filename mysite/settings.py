@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-@3$ebfyc01*6x^eu)u9=3hj!j7j!g)_ksekgz3p^uj50&!dzk*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+WAGTAIL_SITE_NAME = "Anna's Blog"
+WAGTAILADMIN_BASE_URL = 'http://localhost:8000'
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'anna1987.pythonanywhere.com']
 
 
@@ -38,6 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail',
+    'modelcluster',
+    'taggit',
     'blog',
 ]
 
@@ -49,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -81,7 +97,6 @@ DATABASES = {
         'NAME': THIS_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -120,8 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
