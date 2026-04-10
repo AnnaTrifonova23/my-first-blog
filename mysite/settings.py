@@ -12,19 +12,29 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 THIS_DIR = Path(__file__).parent.resolve()
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+print("DATABASE_URL:", os.environ.get("DATABASE_URL"))
+
+# False if not in os.environ because of casting above
+DEBUG = env('DEBUG')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@3$ebfyc01*6x^eu)u9=3hj!j7j!g)_ksekgz3p^uj50&!dzk*'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = env('SECRET')
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'anna1987.pythonanywhere.com']
 
@@ -85,20 +95,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+ 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DEMO_TEST',
-        'USER': 'postgres',
-        'PASSWORD': 'qwaser123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': env.db()
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
