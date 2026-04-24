@@ -1,14 +1,15 @@
 import environ
 import os
+from pathlib import Path
 
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    SECRET_KEY=(str, ''),
 )
 
 # Set the project base directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+THIS_DIR = Path(__file__).parent.resolve()
 
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -24,8 +25,12 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'anna1987.pythonanywhere.co
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':  env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -85,9 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -109,15 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'it-IT'
-
-TIME_ZONE = 'Europe/Rome'
-
+LANGUAGE_CODE = env('LANGUAGE_CODE')
+TIME_ZONE = env('TIME_ZONE')
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
